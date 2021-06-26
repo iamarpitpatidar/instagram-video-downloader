@@ -18,16 +18,22 @@ import HttpsProxyAgent from 'https-proxy-agent'
     console.log('')
 
     function getProxy() {
+        console.log(chalk.green.bold('Info: ')+chalk.blue('Reading Proxies file...'))
         const file = fs.readFileSync('./proxies.txt', 'utf-8')
         const proxies = file.split('\r\n').filter(each => each)
-        const random = proxies[Math.floor(Math.random() * proxies.length)]
+        console.log(chalk.green.bold('Info: ')+chalk.blue(`${proxies.length} proxies found!`))
+        console.log(chalk.green.bold('Info: ')+chalk.blue('getting random proxy'))
+        const random = proxies[Math.floor(Math.random() * proxies.length)].split(':')
+        const proxy = `http://${random[2]}:${random[3]}@${random[0]}:${random[1]}`
+        console.log(chalk.green.bold('Info: ')+chalk.blue(`currently using ${proxy}`))
 
-        return `http://${random[3]}:${random[4]}@${random[2]}:${random[1]}`
+        return proxy
     }
     console.log(chalk.green.bold('Info: ')+chalk.blue('Creating HTTP agent'))
     const agent = new HttpsProxyAgent(getProxy())
     const delay = (ms = 1000) => new Promise(r => setTimeout(r, ms));
 
+    console.log(chalk.green.bold('Info: ')+chalk.blue('creating fake user agent'))
     const userAgent = new UserAgent();
     for (let i = 0; i < links.length; i++) {
         await delay(3000)
