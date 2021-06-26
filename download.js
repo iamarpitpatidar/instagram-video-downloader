@@ -22,10 +22,10 @@ import HttpsProxyAgent from 'https-proxy-agent'
         const file = fs.readFileSync('./proxies.txt', 'utf-8')
         const proxies = file.split('\r\n').filter(each => each)
         console.log(chalk.green.bold('Info: ')+chalk.blue(`${proxies.length} proxies found!`))
-        console.log(chalk.green.bold('Info: ')+chalk.blue('getting random proxy'))
+        console.log(chalk.green.bold('Info: ')+chalk.blue('Getting random proxy'))
         const random = proxies[Math.floor(Math.random() * proxies.length)].split(':')
         const proxy = `http://${random[2]}:${random[3]}@${random[0]}:${random[1]}`
-        console.log(chalk.green.bold('Info: ')+chalk.blue(`currently using ${proxy}`))
+        console.log(chalk.green.bold('Info: ')+chalk.blue(`Now using: ${proxy}`))
 
         return proxy
     }
@@ -33,13 +33,16 @@ import HttpsProxyAgent from 'https-proxy-agent'
     const agent = new HttpsProxyAgent(getProxy())
     const delay = (ms = 1000) => new Promise(r => setTimeout(r, ms));
 
-    console.log(chalk.green.bold('Info: ')+chalk.blue('creating fake user agent'))
+    console.log(chalk.green.bold('Info: ')+chalk.blue('Creating fake user agent'))
     const userAgent = new UserAgent();
     for (let i = 0; i < links.length; i++) {
+        const videoId = /https?:\/\/(?:www.)?instagram.com\/reel\/([^\/?#&]+).*/gm.exec(links[i])
+        const url = `https://www.instagram.com/p/${videoId[1]}/?__a=1`
+        console.log(url)
         await delay(3000)
         await axios({
-            method: 'post',
-            url: 'https://shielded-basin-48291.herokuapp.com/api/post',
+            method: 'get',
+            url: url,
             headers: {
                 'Content-Type': 'application/json',
                 'User-agent': userAgent.toString()
@@ -49,8 +52,9 @@ import HttpsProxyAgent from 'https-proxy-agent'
         })
             .then(response => response.data)
             .then(data => {
-                if (data.type && data.links) {
-                    console.log(chalk.green.bold('Info: ')+chalk.blue(`Downloading: ${/https?:\/\/(?:www.)?instagram.com\/reel\/([^\/?#&]+).*/gm.exec(data.links.video)}`))
+                console.log(data)
+                if (data.graphql && data.shortcode && data.shortcode_media.__typename === 'GraphVideo') {
+                    console.log(chalk.green.bold('Info: ')+chalk.blue(`Downloading: ${videoId}`))
                 } else console.warn(chalk.yellow('Warn: ')+chalk.bold('Video Metadata not found!'))
             })
             .catch(error => console.error(chalk.red(error)))
