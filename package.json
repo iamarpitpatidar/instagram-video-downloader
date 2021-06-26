@@ -1,0 +1,21 @@
+{
+  "name": "youtube",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "download": "yarn babel-node download.js",
+    "vpn": "yarn babel-node vpn.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/preset-env": "^7.14.7",
+    "axios": "^0.21.1",
+    "chalk": "^4.1.1",
+    "flatted": "^3.1.1",
+    "https-proxy-agent": "^5.0.0",
+    "user-agents": "^1.0.694",
+    "wget-improved": "^3.2.1"
+  }
+}

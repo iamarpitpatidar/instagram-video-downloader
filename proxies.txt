@@ -1,0 +1,10 @@
+209.127.191.180:9279:yfnexqkz:l4qwggau41rq
+45.95.96.132:8691:yfnexqkz:l4qwggau41rq
+45.95.96.187:8746:yfnexqkz:l4qwggau41rq
+45.95.96.237:8796:yfnexqkz:l4qwggau41rq
+45.136.228.154:6209:yfnexqkz:l4qwggau41rq
+45.94.47.66:8110:yfnexqkz:l4qwggau41rq
+45.94.47.108:8152:yfnexqkz:l4qwggau41rq
+193.8.56.119:9183:yfnexqkz:l4qwggau41rq
+45.95.99.226:7786:yfnexqkz:l4qwggau41rq
+45.95.99.20:7580:yfnexqkz:l4qwggau41rq
